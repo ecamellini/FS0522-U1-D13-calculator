@@ -1,27 +1,30 @@
 body {
   background-color: rgb(16, 19, 53);
-  /* font-size: 60px;
-  font-family: "Work Sans", sans-serif; */
+  font-family: "Work Sans", sans-serif;
 }
 
 #container {
-  width: 415px;
+  width: 420px;
   margin-inline: auto;
   /* Same as: margin: 0 auto */
 }
 
 #display {
   height: 80px;
-  width: 415px;
+  width: 416px;
+  margin-bottom: 4px;
   background-color: white;
+  font-size: 60px;
 }
 
 button {
   height: 100px;
   width: 100px;
-  margin-top: 1px;
-  margin-bottom: 1px;
+  margin-top: 2px;
+  margin-bottom: 2px;
   border: none;
+  font-size: 60px;
+  font-family: inherit;
 }
 
 .operation-button {
