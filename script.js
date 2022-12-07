@@ -78,14 +78,40 @@ function onOperationButtonClick(eventData) {
     let operand2 = parseFloat(currentValue);
 
     // Let's try with a serie of if
-    if (previousOperation === "+") {
-      result = operand1 + operand2;
-    } else if (previousOperation === "-") {
-      result = operand1 - operand2;
-    } else if (previousOperation === "/") {
-      result = operand1 / operand2;
-    } else if (previousOperation === "*") {
-      result = operand1 * operand2;
+    // if (previousOperation === "+") {
+    //   result = operand1 + operand2;
+    // } else if (previousOperation === "-") {
+    //   result = operand1 - operand2;
+    // } else if (previousOperation === "/") {
+    //   result = operand1 / operand2;
+    // } else if (previousOperation === "*") {
+    //   result = operand1 * operand2;
+    // } else {
+    //   alert("Something went wrong!");
+    // }
+
+    // ANOTHER WAY TO DO THE SAME IF ... ELSE CHAIN
+    // Syntactic sugar for a chain of comparisons on the same variable.
+    switch (previousOperation) {
+      case "+":
+        result = operand1 + operand2;
+        break; // Needed to avoid JS executing also the next cases.
+
+      case "-":
+        result = operand1 - operand2;
+        break;
+
+      case "*":
+        result = operand1 * operand2;
+        break;
+
+      case "/":
+        result = operand1 / operand2;
+        break;
+
+      default: // This is like the final else in the chain of if ... else
+        alert("Something went wrong!");
+        break;
     }
 
     document.getElementById("display").innerText = result;
