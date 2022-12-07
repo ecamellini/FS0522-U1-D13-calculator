@@ -44,12 +44,11 @@ UX (user experience) - Designing the structure and "flow" of the pages, how it s
 * Wireframes
 * Interactive prototypes
 
-UI - The high fidelity interface design, how it should look:
+UI (user interface) - Designing the final interface, how it should really look:
 
 * Mockups
 
-
-Tools used by designer in these phases:
+Tools used by designers in these phases:
 
 * Figma (Mockup) https://www.figma.com/
 * Adobe XD & Sketch app
@@ -68,6 +67,6 @@ How to structure data, how to structure the frontend / backend / frameworks to u
 
 In simple terms: in this phase the developers talk about how to code what needs to be coded, so that they are all aligned before starting.
 
-Calculator software design:
+**Calculator software design:**
 
 This is a simple application, with few buttons and requirements, we will have no server, no data to serve the user. We are simply going to focus on the bare minimum functions. Addition, Subtraction, Multiplication, Division. Then display the result, and use it for the next operation.
