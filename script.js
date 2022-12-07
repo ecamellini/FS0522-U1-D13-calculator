@@ -95,6 +95,8 @@ function onOperationButtonClick(eventData) {
     switch (previousOperation) {
       case "+":
         result = operand1 + operand2;
+        // in here we can any code we want, any number of instruction.
+        // Also complex statements.
         break; // Needed to avoid JS executing also the next cases.
 
       case "-":
