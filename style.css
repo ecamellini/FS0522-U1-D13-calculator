@@ -11,10 +11,12 @@ body {
 
 #display {
   height: 80px;
-  width: 416px;
+  width: 406px;
   margin-bottom: 4px;
   background-color: white;
   font-size: 60px;
+  text-align: right;
+  padding-right: 10px;
 }
 
 button {

@@ -1,5 +1,24 @@
-function onNumericButtonClick() {
-  console.log("CLICKED!");
+function onNumericButtonClick(eventData) {
+  // click listener for numeric buttons
+
+  // .target on the event object/event data alwasy gives you
+  // a refernce to the tag where the event was triggered.
+  let clickedDigit = eventData.target.innerText;
+  let display = document.getElementById("display");
+
+  if (display.innerText === "0") {
+    // replace the 0 with digit clicked.
+    display.innerText = clickedDigit;
+  } else {
+    // add the digit to the display
+    display.innerText += clickedDigit;
+  }
+  // The same:
+  // display.innerText = display.innerText + clickedDigit;
+}
+
+function clearDisplay() {
+  document.getElementById("display").innerText = "0";
 }
 
 function onLoadOperations() {
@@ -19,6 +38,10 @@ function onLoadOperations() {
     button.addEventListener("click", onNumericButtonClick); // NO (), it will be called later
   } // For OF, not FOR IN. FOR IN is something different
   // it is deprecated, it's buggy feature of JS that it's still there.
+
+  document
+    .getElementById("clear-button")
+    .addEventListener("click", clearDisplay);
 }
 
 window.onload = onLoadOperations;
