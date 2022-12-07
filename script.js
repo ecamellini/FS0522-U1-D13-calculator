@@ -4,14 +4,14 @@
 
 // DATA STORAGE
 // (not persistent - if reload the browser, I start from scratch)
-let previousValue;
-let previousOperation;
+let lastResult;
+let lastOperation;
 // These are called GLOBAL variables, because they are available to all our JS code
 
 // AN ALTERNATIVE...
 // let calculatorStorage = {
-//   previousValue: null,
-//   previousOperation: null
+//   lastResult: null,
+//   lastOperation: null
 // }
 
 // _________________________________________
@@ -39,87 +39,101 @@ function clearDisplay() {
   document.getElementById("display").innerText = "0";
 }
 
+function clearMemory() {
+  lastOperation = undefined;
+  lastResult = undefined;
+}
+
 function onOperationButtonClick(eventData) {
   let operation = eventData.target.innerText;
 
-  if (operation !== "=") {
+  if (operation === "C") {
+    clearDisplay();
+    clearMemory();
+  } else if (operation !== "=") {
     // We want to
     // 1) Save the number on the display, and clear it
     // 2) Save the operation
-    previousValue = document.getElementById("display").innerText;
-    previousOperation = operation;
-    clearDisplay();
-
-    console.log("Memory: ", previousValue, previousOperation);
-  } else {
-    // When we click on equals, we want to
-    // 1) Get the previous number that we saved
-    // 2) Get the number currently on the diplay
-    // 3) Get the operation saved before
-    // 4) Execute the operation --> print the result on display
-
-    // NOTE THAT WE HAVE PREVIOUS VALUE AND PREVIOUS OPERATION AVAIABLE, STORED IN
-    // THE GLOBAL VARS:
-    // previousValue
-    // previousOperation
-    let currentValue = document.getElementById("display").innerText;
-    console.log("Executing: ", previousValue, previousOperation, currentValue);
-
-    // To evaluate the result of a JS operation written as a string
-    // we could use eval()
-    // eval("12 + 14")  ---> 26
-    // BUT -- EVAL SHOULD NEVER BE USED: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
-
-    let result;
-
-    // We need to convert the two things we saved to number.
-    // Why? Because they were both .innerText --> strings.
-    let operand1 = parseFloat(previousValue);
-    let operand2 = parseFloat(currentValue);
-
-    // Let's try with a serie of if
-    // if (previousOperation === "+") {
-    //   result = operand1 + operand2;
-    // } else if (previousOperation === "-") {
-    //   result = operand1 - operand2;
-    // } else if (previousOperation === "/") {
-    //   result = operand1 / operand2;
-    // } else if (previousOperation === "*") {
-    //   result = operand1 * operand2;
-    // } else {
-    //   alert("Something went wrong!");
-    // }
-
-    // ANOTHER WAY TO DO THE SAME IF ... ELSE CHAIN
-    // Syntactic sugar for a chain of comparisons on the same variable.
-    switch (previousOperation) {
-      case "+":
-        result = operand1 + operand2;
-        // in here we can any code we want, any number of instruction.
-        // Also complex statements.
-        break; // Needed to avoid JS executing also the next cases.
-
-      case "-":
-        result = operand1 - operand2;
-        break;
-
-      case "*":
-        result = operand1 * operand2;
-        break;
-
-      case "/":
-        result = operand1 / operand2;
-        break;
-
-      default: // This is like the final else in the chain of if ... else
-        alert("Something went wrong!");
-        break;
+    if (lastResult !== undefined) {
+      executeLastOperation();
+    } else {
+      lastResult = document.getElementById("display").innerText;
     }
 
-    document.getElementById("display").innerText = result;
+    lastOperation = operation;
+    clearDisplay();
+
+    console.log("Memory: ", lastResult, lastOperation);
+  } else {
+    // When we click on equals, we want to
+    executeLastOperation(); // execute the operation and put the result in lastResult
+    document.getElementById("display").innerText = lastResult;
+    clearMemory();
   }
 }
 
+function executeLastOperation() {
+  // 1) Get the previous number that we saved
+  // 2) Get the number currently on the diplay
+  // 3) Get the operation saved before
+  // 4) Execute the operation --> print the result on display
+
+  // NOTE THAT WE HAVE PREVIOUS VALUE AND PREVIOUS OPERATION AVAIABLE, STORED IN
+  // THE GLOBAL VARS:
+  // lastResult
+  // lastOperation
+  let currentValue = document.getElementById("display").innerText;
+  console.log("Executing: ", lastResult, lastOperation, currentValue);
+
+  // To evaluate the result of a JS operation written as a string
+  // we could use eval()
+  // eval("12 + 14")  ---> 26
+  // BUT -- EVAL SHOULD NEVER BE USED: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
+
+  // We need to convert the two things we saved to number.
+  // Why? Because they were both .innerText --> strings.
+  let operand1 = parseFloat(lastResult);
+  let operand2 = parseFloat(currentValue);
+
+  // Let's try with a serie of if
+  // if (lastOperation === "+") {
+  //   lastResult = operand1 + operand2;
+  // } else if (lastOperation === "-") {
+  //   lastResult = operand1 - operand2;
+  // } else if (lastOperation === "/") {
+  //   lastResult = operand1 / operand2;
+  // } else if (lastOperation === "*") {
+  //   lastResult = operand1 * operand2;
+  // } else {
+  //   alert("Something went wrong!");
+  // }
+
+  // ANOTHER WAY TO DO THE SAME IF ... ELSE CHAIN
+  // Syntactic sugar for a chain of comparisons on the same variable.
+  switch (lastOperation) {
+    case "+":
+      lastResult = operand1 + operand2;
+      // in here we can any code we want, any number of instruction.
+      // Also complex statements.
+      break; // Needed to avoid JS executing also the next cases.
+
+    case "-":
+      lastResult = operand1 - operand2;
+      break;
+
+    case "*":
+      lastResult = operand1 * operand2;
+      break;
+
+    case "/":
+      lastResult = operand1 / operand2;
+      break;
+
+    default: // This is like the final else in the chain of if ... else
+      alert("Something went wrong!");
+      break;
+  }
+}
 function onLoadOperations() {
   // We want to programmatically add "click" event
   // listeners to all the buttons of our calculator.
@@ -142,10 +156,6 @@ function onLoadOperations() {
   for (let button of operationButtons) {
     button.addEventListener("click", onOperationButtonClick);
   }
-
-  document
-    .getElementById("clear-button")
-    .addEventListener("click", clearDisplay);
 }
 
 window.onload = onLoadOperations;
