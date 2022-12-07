@@ -1,0 +1,33 @@
+body {
+  background-color: rgb(16, 19, 53);
+  /* font-size: 60px;
+  font-family: "Work Sans", sans-serif; */
+}
+
+#container {
+  width: 415px;
+  margin-inline: auto;
+  /* Same as: margin: 0 auto */
+}
+
+#display {
+  height: 80px;
+  width: 415px;
+  background-color: white;
+}
+
+button {
+  height: 100px;
+  width: 100px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  border: none;
+}
+
+.operation-button {
+  background-color: rgb(140, 60, 140)
+}
+
+.numeric-button {
+  background-color: white;
+}
